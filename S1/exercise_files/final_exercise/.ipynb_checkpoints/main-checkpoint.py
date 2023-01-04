@@ -1,9 +1,15 @@
 import argparse
 import sys
 import torch
-from data import CorruptMnist
+import click
+from data import mnist
 from model import MyAwesomeModel
 import matplotlib.pyplot as plt
+
+#Hyperparameters
+num_classes = 10
+num_l1 = 300
+num_features = x_train.shape[1]
 
 class TrainOREvaluate(object):
     """ Helper class that will help launch class methods as commands
@@ -31,16 +37,16 @@ class TrainOREvaluate(object):
         print("Training day and night")
         parser = argparse.ArgumentParser(description='Training arguments')
         parser.add_argument('--lr', default=1e-3)
-
+        # add any additional argument that you want
         args = parser.parse_args(sys.argv[2:])
         print(args)
-
-        model = MyAwesomeModel()
+        
+        # TODO: Implement training loop here
+        model = MyAwesomeModel(num_features, num_l1, num_classes)
         model = model.to(self.device)
         train_set = CorruptMnist(train=True)
-
         dataloader = torch.utils.data.DataLoader(train_set, batch_size=128)
-        optimizer = torch.optim.Adam(model.parameters(), lr=float(args.lr))
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
         criterion = torch.nn.CrossEntropyLoss()
         
         n_epoch = 5
@@ -54,7 +60,7 @@ class TrainOREvaluate(object):
                 loss.backward()
                 optimizer.step()
                 loss_tracker.append(loss.item())
-            print(f" Epoch {epoch+1}/{n_epoch}. Loss: {loss}")        
+            print(f"Epoch {epoch+1}/{n_epoch}. Loss: {loss}")        
         torch.save(model.state_dict(), 'trained_model.pt')
             
         plt.plot(loss_tracker, '-')
@@ -68,10 +74,11 @@ class TrainOREvaluate(object):
         print("Evaluating until hitting the ceiling")
         parser = argparse.ArgumentParser(description='Training arguments')
         parser.add_argument('load_model_from', default="")
-
+        # add any additional argument that you want
         args = parser.parse_args(sys.argv[2:])
         print(args)
-
+        
+        # TODO: Implement evaluation logic here
         model = MyAwesomeModel()
         model.load_state_dict(torch.load(args.load_model_from))
         model = model.to(self.device)
@@ -89,7 +96,7 @@ class TrainOREvaluate(object):
             correct += (preds == y.to(self.device)).sum().item()
             total += y.numel()
             
-        print(f" Test set accuracy {correct/total}")
+        print(f"Test set accuracy {correct/total}")
 
 
 if __name__ == '__main__':
