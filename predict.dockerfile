@@ -1,4 +1,4 @@
-# Base image
+
 FROM python:3.7-slim
 
 WORKDIR /
@@ -14,4 +14,4 @@ COPY models/ models/
 
 RUN pip install -r requirements.txt --no-cache-dir
 
-ENTRYPOINT ["python", "-u", "src/train_model.py"]
+ENTRYPOINT ["python", "-u", "src/predict_model.py"]

@@ -9,7 +9,7 @@ class Train(object):
        
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        print("Training day and night")
+        print("Training.. ")
 
         lr = 1e-3
 
@@ -32,8 +32,9 @@ class Train(object):
                 loss.backward()
                 optimizer.step()
                 loss_tracker.append(loss.item())
-            print(f" Epoch {epoch+1}/{n_epoch}. Loss: {loss}")        
-        torch.save(model.state_dict(), './models/trained_model.pt')
+            print(f" Epoch {epoch+1}/{n_epoch}. Loss: {loss}")  
+            break      
+        torch.save(model.state_dict(), '../models/trained_model.pt')
             
         plt.plot(loss_tracker, '-')
         plt.xlabel('Training step')

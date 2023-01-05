@@ -8,10 +8,10 @@ class Evaluate(object):
        
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
-        print("Evaluating until hitting the ceiling")
+        print("Evaluating.. ")
 
         model = MyAwesomeModel()
-        model.load_state_dict(torch.load("./models/trained_model.pt"))
+        model.load_state_dict(torch.load("../models/trained_model.pt"))
         model = model.to(self.device)
 
         test_set = CorruptMnist(train=False)
