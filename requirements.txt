@@ -1,0 +1,5 @@
+click==7.1.2
+matplotlib==3.3.2
+numpy==1.21.4
+torch==1.8.1
+wget==3.2

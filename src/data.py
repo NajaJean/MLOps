@@ -37,7 +37,6 @@ class CorruptMnist(Dataset):
     def __getitem__(self, idx):
         return self.data[idx].float(), self.targets[idx]
 
-
 if __name__ == "__main__":
     dataset_train = CorruptMnist(train=True)
     dataset_test = CorruptMnist(train=False)
