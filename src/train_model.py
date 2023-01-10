@@ -3,6 +3,8 @@ from data import CorruptMnist
 from model import MyAwesomeModel
 import matplotlib.pyplot as plt
 
+print(torch.__version__)
+
 class Train(object):
     
     def __init__(self):
@@ -40,8 +42,6 @@ class Train(object):
         plt.xlabel('Training step')
         plt.ylabel('Training loss')
         plt.savefig("training_curve.png")
-        
-        return model
         
 
 if __name__ == '__main__':
